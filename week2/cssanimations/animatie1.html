@@ -1,0 +1,25 @@
+<html>
+	<head>
+		<title>Animatie 1</title>
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+	</head>
+
+	<body>		
+
+		<div id="ball1" class="circle"></div>
+		<div id="ball2" class="circle"></div>
+		<div id="ball3" class="circle"></div>
+		
+		<script type="text/javascript" src="script/jquery-1.10.2.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function(e) {
+
+				$('.circle').on('click',function(e){
+					$("#ball1").addClass("ball1Move");
+					$("#ball2").addClass("ball2Move");
+					$("#ball3").addClass("ball3Move");
+				});
+			});
+		</script>
+	</body>
+</html>

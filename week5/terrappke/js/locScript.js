@@ -16,7 +16,7 @@ function requestCurrentPosition()
 	else
 	{
 		$(".container").text("Geolocation is not supported by this browser.");
-      console.log("Geolocation is not supported by this browser.");
+      //console.log("Geolocation is not supported by this browser.");
 	} 
 }
 
@@ -50,7 +50,7 @@ function fillInFields(weatherInfo)
 	$("#now-degrees").text(today.currentTemp);
 	var icon = weatherInfo.currently.icon;
    // localStorage.setItem("icon",icon);
-    console.log(icon);
+    //console.log(icon);
 
    // var icon = localStorage.getItem("icon");
 
@@ -83,13 +83,13 @@ function localStorageAvailable()
 	var result  = false;
 	
 	if (LSsupport) {
-		console.log( "localStorage is available" );
+		//console.log( "localStorage is available" );
 		result = true;
 	}
-	else
+	/*else
 	{
 		console.log("localeStorage is not available");
-	}
+	}*/
 	
 	return result;
 }
@@ -106,7 +106,7 @@ function getApiData(locData)
 		var longitude = locData[1];
 		var latitude = locData[0];
 		var apiUrl = locData[2];
-		console.log(locData[1]);
+		//console.log(locData[1]);
 
 // CHECK OF DE LOCALSTORAGE GESUPPORTEERD IS OF DAT DE LOCALSTORAGE LEEG/NOG NIET GESET IS
 // DAN HET WEER OPHALEN VIA DE API
@@ -128,15 +128,15 @@ function getApiData(locData)
 			if(localStorageAvailable)
 			{
 				localStorage.setItem('weatherObj',JSON.stringify(msg));
-				console.log(msg);
+				//console.log(msg);
 				// HIER EEN KEY IN LOCALSTORAGE ZETTEN WNR HET EERST IN LOCALSTORAGE GEZET WERD, DAN LATER CHECKEN OF ER
 				// EEN UUR VOORBIJ GING EN DAN TERUG IN DEZE LUS GAAN ANDERS IN DE ELSE
-				console.log();
+				//console.log();
 			}
-			else
+			/*else
 			{
 				console.log(msg);
-			}
+			}*/
 				fillInFields(msg);
 		  
 		});

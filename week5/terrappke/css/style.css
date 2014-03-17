@@ -54,7 +54,7 @@ table {
 body
 {
 	font-family: 'Alegreya Sans SC', sans-serif;
-	background-color: #ffc700;
+	background-color: #faaa37;
 	color: white;
 }
 
@@ -63,13 +63,26 @@ h1
 	font-size: 50px;
 }
 
+a:link,
+a:visited,
+a:active,
+a:hover
+{
+	text-decoration: none;
+	color: white;
+	font-style: italic;
+}
+
 #content
 {
 	padding: 50px 50px;
+	text-align: center;
 }
 
 #content #now
 {
+	margin: 0 auto;
+	width: 200px;
 	margin-top: 40px;
 	font-size: 30px;
 	text-transform: uppercase;
@@ -86,14 +99,14 @@ h1
 	position: absolute;
 	margin-top: 25px;
 	font-size: 60px;
-	margin-left: 20px;
+	margin-left: -30px;
 }
 
 #content #txt
 {
 	font-size: 20px;
-	width: 80%;
-	margin-top: 200px;
+	margin-top: 190px;
+	text-align: left;
 }
 
 #content #cMail
@@ -138,5 +151,29 @@ h1
 	position: absolute;
 }
 
+@media only screen and (min-width: 640px)
+{
 
+#content
+{
+	text-align: left;
+}
+
+#content #now
+{
+	margin-left: 0px;
+	margin-right: 0px;
+}
+
+#content #now #now-degrees
+{
+	margin-left: 30px;
+}
+
+#content #txt
+{
+	max-width: 600px;
+}
+
+}
 

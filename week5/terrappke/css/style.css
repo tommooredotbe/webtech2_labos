@@ -124,5 +124,19 @@ h1
 {
 }
 
+.hidden
+{
+	display: none;
+}
+
+.loadingImage
+{
+	width: 35px;
+	margin-top: 30px;
+	margin-left: -15px;
+	display: none;
+	position: absolute;
+}
+
 
 

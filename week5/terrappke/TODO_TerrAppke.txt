@@ -1,0 +1,10 @@
+﻿TODO TerrAppke
+
+
+
+   CHECK  (L) * nu staat er gedurende ongeveer 7 seconden 22° als default, dat is wat vreemd
+   CHECK  (L) * zorg voor een loading indicator (animated gif of css3?) zolang het weer aan het laden is 
+   (T) * ik zou de content centreren in de browser (wit op fel geel geeft ook veel contrast)
+   (T) * pas de kleur en tekst aan, naargelang het weer. Nu is het 8° en bewolkt, maar ik zie een felgele zonnige 				achtergrondkleur, dat klopt niet meteen
+   CHECK (T) * ik zie dat jullie het weer cachen in localstorage, hoe lang is die cache geldig?
+   (L) * wat als de browser geen geolocation ondersteund? Toon je dan het weer in Mechelen als default? 

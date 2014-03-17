@@ -1,6 +1,7 @@
 // JavaScript Document
 
 
+
 $(document).ready(function () {
 
 		 requestCurrentPosition();
@@ -11,10 +12,12 @@ function requestCurrentPosition()
 { 
 	if (navigator.geolocation) 
 	{ 
-		navigator.geolocation.getCurrentPosition(useGeoData);
+		navigator.geolocation.getCurrentPosition(useGeoData,showError);
 	} 
 	else
 	{
+			
+		getDefaultLocForWeather();
 		$(".container").text("Geolocation is not supported by this browser.");
       //console.log("Geolocation is not supported by this browser.");
 	} 
@@ -115,6 +118,7 @@ function getApiData(locData)
 	if(!localStorageAvailable() || (localStorage.getItem('weatherObj') === null )
 		/*|| localStorage.getItem('startHour')*/)
 	{
+		$(".loadingImage").show();
 		var request = $.ajax({
 							  url: apiUrl,
 							  type: "GET",
@@ -138,12 +142,14 @@ function getApiData(locData)
 				console.log(msg);
 			}*/
 				fillInFields(msg);
-		  
+		  		$(".loadingImage").hide();
 		});
 
 		request.fail(function(jqXHR, textStatus) {
 			   console.log("Request failed: " + textStatus );
 			   console.log("Request exceeded");
+
+		  		$(".loadingImage").hide();
 		});	
 
 	}
@@ -152,6 +158,8 @@ function getApiData(locData)
 	else
 	{
 		fillInFields(JSON.parse(localStorage.getItem('weatherObj')));
+
+		$(".loadingImage").hide();
 	}
 }
 
@@ -179,4 +187,59 @@ function checkSwitchStatus(p_element)
 	 	else
 	 		p_element.innerHTML = 'Tomorrow';
 }
+
+function getDefaultLocForWeather()
+{
+	var defaultLocation = "mechelen";
+		var lookUpCoordinatesURL = "https://maps.googleapis.com/maps/api/geocode/json?address=" + defaultLocation + "&sensor=true&key=AIzaSyDUIM8sdw7oiw5UlzVPHOm84Xmaue3rl4g";
+		//console.log(lookUpCoordinatesURL);
+
+		var request = $.ajax({
+							url: lookUpCoordinatesURL,
+							type: "GET",
+							/*data: {latitude : latitude, longitude :longitude}, */
+							dataType: "json"
+		});
+
+		request.done(function(msg) {
+
+						console.log(msg);
+						currentLat = msg.results[0].geometry.location.lat;
+						currentLon = msg.results[0].geometry.location.lng;
+						//console.log(currentLat);
+						//console.log(currentLon);
+
+						var locWeather = Array();
+						locWeather.push(currentLat,currentLon );
+
+						var newUrl = "https://api.forecast.io/forecast/54317a33b94f022482a2bc22463cc986/" + currentLat + "," + currentLon + "?callback=?&units=si";
+						locWeather.push(newUrl);
+						//console.log(newUrl);
+						getApiData(locWeather);
+				});
+
+				request.fail(function(jqXHR, textStatus) {
+					   console.log("Request failed: " + textStatus );
+					   console.log("Request exceeded");
+				});
+}
+
+function showError(error)
+  {
+  switch(error.code) 
+    {
+    case error.PERMISSION_DENIED:
+      getDefaultLocForWeather();
+      break;
+    case error.POSITION_UNAVAILABLE:
+     getDefaultLocForWeather();
+      break;
+    case error.TIMEOUT:
+      getDefaultLocForWeather();
+      break;
+    case error.UNKNOWN_ERROR:
+      getDefaultLocForWeather();
+      break;
+    }
+  }
 

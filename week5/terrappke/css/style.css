@@ -63,6 +63,11 @@ h1
 	font-size: 50px;
 }
 
+#dynamic
+{
+	font-size: 30px;
+}
+
 a:link,
 a:visited,
 a:active,
@@ -153,6 +158,12 @@ a:hover
 
 @media only screen and (min-width: 640px)
 {
+
+#dynamic
+{
+	font-size: 40px;
+	max-width: 700px;
+}
 
 #content
 {

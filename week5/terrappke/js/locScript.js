@@ -3,8 +3,26 @@
 
 
 $(document).ready(function () {
-
-		 requestCurrentPosition();
+	var d = new Date();
+	var information = localStorage.getItem('weatherObj');
+    var weatherTimestamp = localStorage.getItem("weatherTimestamp");
+    var thirtyMinsAgo = d.getTime() - 3600000; //3600000 milisec = 60 mins
+    if (information === null){
+    	requestCurrentPosition();
+    	console.log("weer cache is leeg, ophalen");
+    }else{
+        // als timestamp in mili groter is dan nu-30mins
+        if(weatherTimestamp>thirtyMinsAgo)
+        {
+            fillInFields(JSON.parse(information));
+            console.log("localsteurage gebruiken");
+        }
+        else{
+        	//opnieuw gegevens ophalen
+        	requestCurrentPosition();  
+        	console.log("geg opnieuw ophalen");
+        }
+    }    
 });
 
 
@@ -16,9 +34,8 @@ function requestCurrentPosition()
 	} 
 	else
 	{
-			
 		getDefaultLocForWeather();
-		$(".container").text("Geolocation is not supported by this browser.");
+		$("#dynamic").text("Geolocation is not supported by this browser.");
       //console.log("Geolocation is not supported by this browser.");
 	} 
 }
@@ -136,11 +153,16 @@ function getApiData(locData)
 				// HIER EEN KEY IN LOCALSTORAGE ZETTEN WNR HET EERST IN LOCALSTORAGE GEZET WERD, DAN LATER CHECKEN OF ER
 				// EEN UUR VOORBIJ GING EN DAN TERUG IN DEZE LUS GAAN ANDERS IN DE ELSE
 				//console.log();
+
+				//timestamp zetten
+            	var d = new Date();
+            	localStorage.setItem("weatherTimestamp",d.getTime());  
 			}
 			/*else
 			{
 				console.log(msg);
 			}*/
+
 				fillInFields(msg);
 		  		$(".loadingImage").hide();
 		});

@@ -1,10 +1,25 @@
 // JavaScript Document
 
-
+var receivedPosition=false;
 
 $(document).ready(function () {
-
-		 requestCurrentPosition();
+	var d = new Date();
+	var information = localStorage.getItem('weatherObj');
+    var weatherTimestamp = localStorage.getItem("weatherTimestamp");
+    var thirtyMinsAgo = d.getTime() - 3600000; //3600000 milisec = 60 mins
+    if (information === null){
+    	requestCurrentPosition();
+    }else{
+        // als timestamp in mili groter is dan nu-30mins
+        if(weatherTimestamp>thirtyMinsAgo)
+        {
+            fillInFields(JSON.parse(information));
+        }
+        else{
+        	//opnieuw gegevens ophalen
+        	requestCurrentPosition();  
+        }
+    }    
 });
 
 
@@ -12,20 +27,36 @@ function requestCurrentPosition()
 { 
 	if (navigator.geolocation) 
 	{ 
+		setTimeout(function() { waitShowError() }, 5000);
 		navigator.geolocation.getCurrentPosition(useGeoData,showError);
 	} 
 	else
 	{
-			
 		getDefaultLocForWeather();
-		$(".container").text("Geolocation is not supported by this browser.");
+		$("#dynamic").text("Geolocation is not supported by this browser.");
       //console.log("Geolocation is not supported by this browser.");
 	} 
+}
+
+// Firefox geeft bij locatie sharing de mogelijkheden 'share', 'not share' en 'not now'
+// de rest van de weigeringen of fouten worden goed opgevangen, enkel 'not now' niet
+// vandaar deze functie, 'not now' = bug in firefox en geeft niet echt een beslissing weer
+// daarom dat we effe wachten op antwoord, wanneer er niets komt, wordt automatisch een error opgevangen
+// bij deze wordt dus ook default alles van mechelen opgehaald
+function waitShowError()
+{
+    if(!receivedPosition){
+        var err = new Error();
+        err.code=1;
+        showError(err);
+        //showError();
+    }
 }
 
 
 function useGeoData(position) 
 { 
+	receivedPosition=true;
 	var longitude = position.coords.longitude; 
 	var latitude = position.coords.latitude; 
 	//console.log(longitude + " " + latitude); 
@@ -50,7 +81,7 @@ function fillInFields(weatherInfo)
 {
 	var today = new WeatherToday(weatherInfo);
 // IN JQUERY ZETTEN
-	$("#now-degrees").text(today.currentTemp);
+	$("#now-degrees").text(today.currentTemp + '°');
 	var icon = weatherInfo.currently.icon;
    // localStorage.setItem("icon",icon);
     //console.log(icon);
@@ -61,6 +92,34 @@ function fillInFields(weatherInfo)
 	skycons.set("now-icon", icon);
 	skycons.play();
 
+	console.log(today.currentTemp);
+
+	//dynamische achtergrondkleur en h1
+	if(today.currentTemp<0){
+	  $("#dynamic").text("Jammer genoeg nog veel te koud voor terrappkes weer. Stay tuned!");
+	  $('body').css('background-color', '#b6d8ec');
+	}else if(today.currentTemp>0 && today.currentTemp<=5){
+	  $("#dynamic").text("Het is berenkoud! Nog even geduld en het is terrappkes weer.");
+	  $('body').css('background-color', '#81bcde');
+	}else if(today.currentTemp>5 && today.currentTemp<=10){
+	  $("#dynamic").text("Op dit moment is het nog te koud voor een terrappke. Hang on!");
+	  $('body').css('background-color', '#81bcde');
+	}else if(today.currentTemp>10 && today.currentTemp<=15){
+	  $("#dynamic").text("Nog een paar graden hier en het is terrappkes tijd!");
+	  $('body').css('background-color', '#40d0bd');
+	}else if(today.currentTemp>15 && today.currentTemp<=20){
+	  $("#dynamic").text("Warm genoeg voor een terrappke!");
+	  $('body').css('background-color','#faaa37');
+	}else if(today.currentTemp>20 && today.currentTemp<=25){
+	  $("#dynamic").text("Warm weer betekent terrappkes tijd!");
+	  $('body').css('background-color','#f9832d');
+	}else if(today.currentTemp>25 && today.currentTemp<=30){
+	  $("#dynamic").text("Het is nu super goed weer. Klaar voor een terrappke!");
+	  $('body').css('background-color', '#f9672d');
+	}else if(today.currentTemp>30){
+	  $("#dynamic").text("Het is geweldig warm hier. Kom mee een terrappke doen!");
+	  $('body').css('background-color', '#f94f2d');
+	}
 }
 
 //WEATHEROBJ DEFINIEREN
@@ -71,7 +130,7 @@ var WeatherToday = function(information)
 	this.latitude = information.latitude;
 	var convertedDayDate = convertWeatherDate(information.currently.time);
 	this.date = convertedDayDate;
-	this.currentTemp = Math.round(information.currently.apparentTemperature) + '°';
+	this.currentTemp = Math.round(information.currently.apparentTemperature);
 	this.currentDesc = information.currently.summary;
 	this.image = information.currently.icon;
 	this.summary = information.hourly.summary;
@@ -136,11 +195,16 @@ function getApiData(locData)
 				// HIER EEN KEY IN LOCALSTORAGE ZETTEN WNR HET EERST IN LOCALSTORAGE GEZET WERD, DAN LATER CHECKEN OF ER
 				// EEN UUR VOORBIJ GING EN DAN TERUG IN DEZE LUS GAAN ANDERS IN DE ELSE
 				//console.log();
+
+				//timestamp zetten
+            	var d = new Date();
+            	localStorage.setItem("weatherTimestamp",d.getTime());  
 			}
 			/*else
 			{
 				console.log(msg);
 			}*/
+
 				fillInFields(msg);
 		  		$(".loadingImage").hide();
 		});
@@ -180,13 +244,7 @@ function capitaliseFirstLetter(string)
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-function checkSwitchStatus(p_element)
-{
-	if(p_element.innerHTML == 'Tomorrow')
-	 		p_element.innerHTML = 'Today';
-	 	else
-	 		p_element.innerHTML = 'Tomorrow';
-}
+
 
 function getDefaultLocForWeather()
 {
@@ -226,7 +284,7 @@ function getDefaultLocForWeather()
 
 function showError(error)
   {
-  switch(error.code) 
+  /*switch(error.code)
     {
     case error.PERMISSION_DENIED:
       getDefaultLocForWeather();
@@ -236,10 +294,10 @@ function showError(error)
       break;
     case error.TIMEOUT:
       getDefaultLocForWeather();
-      break;
-    case error.UNKNOWN_ERROR:
+      break;*/
+  /*  case error.UNKNOWN_ERROR:*/
+  console.log("error");
       getDefaultLocForWeather();
-      break;
-    }
+     /* break;
+    }*/
   }
-

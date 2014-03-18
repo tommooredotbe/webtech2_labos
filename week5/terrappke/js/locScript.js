@@ -1,6 +1,6 @@
 // JavaScript Document
 
-
+var receivedPosition=false;
 
 $(document).ready(function () {
 	var d = new Date();
@@ -27,6 +27,7 @@ function requestCurrentPosition()
 { 
 	if (navigator.geolocation) 
 	{ 
+		setTimeout(function() { waitShowError() }, 5000);
 		navigator.geolocation.getCurrentPosition(useGeoData,showError);
 	} 
 	else
@@ -37,9 +38,25 @@ function requestCurrentPosition()
 	} 
 }
 
+// Firefox geeft bij locatie sharing de mogelijkheden 'share', 'not share' en 'not now'
+// de rest van de weigeringen of fouten worden goed opgevangen, enkel 'not now' niet
+// vandaar deze functie, 'not now' = bug in firefox en geeft niet echt een beslissing weer
+// daarom dat we effe wachten op antwoord, wanneer er niets komt, wordt automatisch een error opgevangen
+// bij deze wordt dus ook default alles van mechelen opgehaald
+function waitShowError()
+{
+    if(!receivedPosition){
+        var err = new Error();
+        err.code=1;
+        showError(err);
+        //showError();
+    }
+}
+
 
 function useGeoData(position) 
 { 
+	receivedPosition=true;
 	var longitude = position.coords.longitude; 
 	var latitude = position.coords.latitude; 
 	//console.log(longitude + " " + latitude); 
@@ -227,13 +244,7 @@ function capitaliseFirstLetter(string)
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-function checkSwitchStatus(p_element)
-{
-	if(p_element.innerHTML == 'Tomorrow')
-	 		p_element.innerHTML = 'Today';
-	 	else
-	 		p_element.innerHTML = 'Tomorrow';
-}
+
 
 function getDefaultLocForWeather()
 {
@@ -273,7 +284,7 @@ function getDefaultLocForWeather()
 
 function showError(error)
   {
-  switch(error.code) 
+  /*switch(error.code)
     {
     case error.PERMISSION_DENIED:
       getDefaultLocForWeather();
@@ -283,10 +294,10 @@ function showError(error)
       break;
     case error.TIMEOUT:
       getDefaultLocForWeather();
-      break;
-    case error.UNKNOWN_ERROR:
+      break;*/
+  /*  case error.UNKNOWN_ERROR:*/
+  console.log("error");
       getDefaultLocForWeather();
-      break;
-    }
+     /* break;
+    }*/
   }
-

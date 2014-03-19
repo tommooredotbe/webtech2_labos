@@ -8,6 +8,7 @@ $(document).ready(function () {
 	
 	if(localStorageAvailable())
 	{
+
 		var information = localStorage.getItem('weatherObj');
     	var weatherTimestamp = localStorage.getItem("weatherTimestamp");
 
@@ -41,6 +42,7 @@ $(document).ready(function () {
 
 function requestCurrentPosition() 
 { 
+	$(".loadingImage").show();
 	if (navigator.geolocation) 
 	{ 
 		setTimeout(function() { waitShowError() }, 5000);
@@ -108,34 +110,59 @@ function fillInFields(weatherInfo)
 	skycons.set("now-icon", icon);
 	skycons.play();
 
-	console.log(today.currentTemp);
+	//console.log(today.currentTemp);
 
 	//dynamische achtergrondkleur en h1
-	if(today.currentTemp<0){
+	if(today.currentTemp<0)
+	{
 	  $("#dynamic").text("Jammer genoeg nog veel te koud voor terrappkes weer. Stay tuned!");
-	  $('body').css('background-color', '#b6d8ec');
-	}else if(today.currentTemp>0 && today.currentTemp<=5){
-	  $("#dynamic").text("Het is berenkoud! Nog even geduld en het is terrappkes weer.");
-	  $('body').css('background-color', '#81bcde');
-	}else if(today.currentTemp>5 && today.currentTemp<=10){
-	  $("#dynamic").text("Op dit moment is het nog te koud voor een terrappke. Hang on!");
-	  $('body').css('background-color', '#81bcde');
-	}else if(today.currentTemp>10 && today.currentTemp<=15){
-	  $("#dynamic").text("Nog een paar graden hier en het is terrappkes tijd!");
-	  $('body').css('background-color', '#40d0bd');
-	}else if(today.currentTemp>15 && today.currentTemp<=20){
-	  $("#dynamic").text("Warm genoeg voor een terrappke!");
-	  $('body').css('background-color','#faaa37');
-	}else if(today.currentTemp>20 && today.currentTemp<=25){
-	  $("#dynamic").text("Warm weer betekent terrappkes tijd!");
-	  $('body').css('background-color','#f9832d');
-	}else if(today.currentTemp>25 && today.currentTemp<=30){
-	  $("#dynamic").text("Het is nu super goed weer. Klaar voor een terrappke!");
-	  $('body').css('background-color', '#f9672d');
-	}else if(today.currentTemp>30){
-	  $("#dynamic").text("Het is geweldig warm hier. Kom mee een terrappke doen!");
-	  $('body').css('background-color', '#f94f2d');
+	 // $('body').css('background-color', '#b6d8ec');
+	 $('body').addClass('animateBackgroundColorChoice1');
 	}
+	else if(today.currentTemp>0 && today.currentTemp<=5)
+	{
+	  $("#dynamic").text("Het is berenkoud! Nog even geduld en het is terrappkes weer.");
+	  //$('body').css('background-color', '#81bcde');
+	 $('body').addClass('animateBackgroundColorChoice2');
+	}
+	else if(today.currentTemp>5 && today.currentTemp<=10)
+	{
+	  $("#dynamic").text("Op dit moment is het nog te koud voor een terrappke. Hang on!");
+	  //$('body').css('background-color', '#81bcde');
+	 $('body').addClass('animateBackgroundColorChoice3');
+	}
+	else if(today.currentTemp>10 && today.currentTemp<=15)
+	{
+	  $("#dynamic").text("Nog een paar graden hier en het is terrappkes tijd!");
+	 // $('body').css('background-color', '#40d0bd');
+	 $('body').addClass('animateBackgroundColorChoice4');
+	}
+	else if(today.currentTemp>15 && today.currentTemp<=20)
+	{
+	  $("#dynamic").text("Warm genoeg voor een terrappke!");
+	  //$('body').css('background-color','#faaa37');
+	 $('body').addClass('animateBackgroundColorChoice5');
+	}
+	else if(today.currentTemp>20 && today.currentTemp<=25)
+	{
+	  $("#dynamic").text("Warm weer betekent terrappkes tijd!");
+	 // $('body').css('background-color','#f9832d');
+	 $('body').addClass('animateBackgroundColorChoice6');
+	}
+	else if(today.currentTemp>25 && today.currentTemp<=30)
+	{
+	  $("#dynamic").text("Het is nu super goed weer. Klaar voor een terrappke!");
+	 //$('body').css('background-color', '#f9672d');
+	 $('body').addClass('animateBackgroundColorChoice7');
+	}
+	else if(today.currentTemp>30){
+	  $("#dynamic").text("Het is geweldig warm hier. Kom mee een terrappke doen!");
+	  //$('body').css('background-color', '#f94f2d');
+	 $('body').addClass('animateBackgroundColorChoice8');
+	}
+
+	$("#information").addClass('txtGoDown');
+	$("#now").addClass('animate');
 }
 
 //WEATHEROBJ DEFINIEREN
@@ -202,7 +229,7 @@ function getApiData(locData)
 	if(!localStorageAvailable() || (localStorage.getItem('weatherObj') === null )
 		/*|| localStorage.getItem('startHour')*/)
 	{
-		$(".loadingImage").show();
+		
 		var request = $.ajax({
 							  url: apiUrl,
 							  type: "GET",
@@ -235,8 +262,9 @@ function getApiData(locData)
 		});
 
 		request.fail(function(jqXHR, textStatus) {
-			   console.log("Request failed: " + textStatus );
-			   console.log("Request exceeded");
+			   //console.log("Request failed: " + textStatus );
+			   //console.log("Request exceeded");
+			   $("#dynamic").text("Request failed: " + textStatus );
 
 		  		$(".loadingImage").hide();
 		});	
@@ -286,7 +314,7 @@ function getDefaultLocForWeather()
 
 		request.done(function(msg) {
 
-						console.log(msg);
+						//console.log(msg);
 						currentLat = msg.results[0].geometry.location.lat;
 						currentLon = msg.results[0].geometry.location.lng;
 						//console.log(currentLat);
@@ -302,8 +330,10 @@ function getDefaultLocForWeather()
 				});
 
 				request.fail(function(jqXHR, textStatus) {
-					   console.log("Request failed: " + textStatus );
-					   console.log("Request exceeded");
+					  // console.log("Request failed: " + textStatus );
+					   //console.log("Request exceeded");
+					   $("#dynamic").text("Request failed: " + textStatus );
+
 				});
 }
 
@@ -321,7 +351,7 @@ function showError(error)
       getDefaultLocForWeather();
       break;*/
   /*  case error.UNKNOWN_ERROR:*/
-  console.log("error");
+  //console.log("error");
       getDefaultLocForWeather();
      /* break;
     }*/

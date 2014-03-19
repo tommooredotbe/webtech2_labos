@@ -4,22 +4,38 @@ var receivedPosition=false;
 
 $(document).ready(function () {
 	var d = new Date();
-	var information = localStorage.getItem('weatherObj');
-    var weatherTimestamp = localStorage.getItem("weatherTimestamp");
-    var thirtyMinsAgo = d.getTime() - 3600000; //3600000 milisec = 60 mins
-    if (information === null){
-    	requestCurrentPosition();
-    }else{
-        // als timestamp in mili groter is dan nu-30mins
-        if(weatherTimestamp>thirtyMinsAgo)
-        {
-            fillInFields(JSON.parse(information));
-        }
-        else{
-        	//opnieuw gegevens ophalen
-        	requestCurrentPosition();  
-        }
-    }    
+	var thirtyMinsAgo = d.getTime() - 3600000; //3600000 milisec = 60 mins
+	
+	if(localStorageAvailable())
+	{
+		var information = localStorage.getItem('weatherObj');
+    	var weatherTimestamp = localStorage.getItem("weatherTimestamp");
+
+    	if (information === null)
+	    {
+	    	requestCurrentPosition();
+	    }
+	    else
+	    {
+	        // als timestamp in mili groter is dan nu-30mins
+	        if(weatherTimestamp>thirtyMinsAgo)
+	        {
+	            fillInFields(JSON.parse(information));
+	        }
+	        else
+	        {
+	        	//opnieuw gegevens ophalen
+	        	requestCurrentPosition();  
+	        }
+	    }    
+	}
+	else
+	{
+		requestCurrentPosition();  
+	}
+
+    
+    
 });
 
 
@@ -141,19 +157,28 @@ var WeatherToday = function(information)
 
 function localStorageAvailable()
 {
-	var LSsupport = !(typeof window.localStorage == 'undefined');
+	/*var LSsupport = !(typeof window.localStorage == 'undefined');
 	var result  = false;
 	
 	if (LSsupport) {
 		//console.log( "localStorage is available" );
 		result = true;
-	}
+	}/*
 	/*else
 	{
 		console.log("localeStorage is not available");
 	}*/
 	
-	return result;
+	//return result;
+
+	if (Modernizr.localstorage) {
+	  // window.localStorage is available!
+	  return true;
+	} else {
+	  // no native support for local storage :(
+	  // try a fallback or another third-party solution
+	  return false;
+	}
 }
 
 function clearLocalStorage()
@@ -188,7 +213,7 @@ function getApiData(locData)
 	
 							
 		request.done(function(msg) {
-			if(localStorageAvailable)
+			if(localStorageAvailable())
 			{
 				localStorage.setItem('weatherObj',JSON.stringify(msg));
 				//console.log(msg);

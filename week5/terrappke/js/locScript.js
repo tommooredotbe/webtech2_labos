@@ -133,7 +133,7 @@ function fillInFields(weatherInfo)
 	}
 	else if(today.currentTemp>10 && today.currentTemp<=15)
 	{
-	  $("#dynamic").text("Nog een paar graden hier en het is terrappkes tijd!");
+	  $("#dynamic").text("Nog een paar graden meer en het is terrappkes tijd!");
 	 // $('body').css('background-color', '#40d0bd');
 	 $('body').addClass('animateBackgroundColorChoice4');
 	}

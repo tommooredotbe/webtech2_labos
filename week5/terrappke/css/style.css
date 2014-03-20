@@ -82,7 +82,7 @@ a:hover
 #content
 {
 	/*padding: 50px 50px;*/
-	padding: 30px 50px 60px 50px;
+	padding: 30px 50px 100px 50px;
 	text-align: center;
 }
 
@@ -162,7 +162,7 @@ a:hover
 	padding: 10px;
 	font-size: 20px;
 	font-family: 'Alegreya Sans SC', sans-serif;
-	width: 250px;
+	width: 150px;
 }
 
 
@@ -186,13 +186,24 @@ a:hover
 	margin-top: 10px;
 }
 
-.schoolLogo
+#logos
 {
-	width: 155px;
-	right: 20px;
-	position: absolute;
+	height: 75px;
 }
 
+.schoolLogo
+{
+	height: 50px;
+	margin-bottom: 30px;
+	padding-right: 30px;
+}
+
+.imdLogo
+{
+	padding-left: 30px;
+	margin-bottom: 30px;
+	width: 50px;
+}
 
 /*--------------------------------------------MEDIA QUERIES---------------------------------------------------------------*/
 
@@ -225,6 +236,11 @@ a:hover
 #content #txt
 {
 	max-width: 600px;
+}
+
+#userEmail
+{
+	width: 250px;
 }
 
 }

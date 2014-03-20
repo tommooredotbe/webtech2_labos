@@ -55,19 +55,23 @@ table {
 
 body
 {
-	font-family: 'Alegreya Sans SC', sans-serif;
+	/*font-family: 'Alegreya Sans SC', sans-serif;*/
+	font-family: 'roboto-regular', sans-serif;
 	background-color: #faaa37;
 	color: white;
+	line-height: 25px;
 }
 
 h1
 {
-	font-size: 50px;
+	font-size: 40px;
+	font-family: 'oxygen-regular', sans-serif;
 }
 
 #dynamic
 {
-	font-size: 30px;
+	font-size: 20px;
+	font-family: 'oxygen-regular', sans-serif;
 }
 
 a:link,
@@ -82,7 +86,7 @@ a:hover
 #content
 {
 	/*padding: 50px 50px;*/
-	padding: 30px 50px 60px 50px;
+	padding: 30px 50px 100px 50px;
 	text-align: center;
 }
 
@@ -148,7 +152,9 @@ a:hover
 {
 	/*background-color: black;*/
 	/*background-color: #01af66;*/
-	background-color: #af014a;
+	/*background-color: #af014a;*/
+	/*background-color: #d34006;*/
+	background-color: #8b0000;
 	color: white;
 	border-radius: 3px;
 	border: 0;
@@ -162,7 +168,7 @@ a:hover
 	padding: 10px;
 	font-size: 20px;
 	font-family: 'Alegreya Sans SC', sans-serif;
-	width: 250px;
+	width: 150px;
 }
 
 
@@ -186,45 +192,90 @@ a:hover
 	margin-top: 10px;
 }
 
-.schoolLogo
+#logos
 {
-	width: 155px;
-	right: 20px;
-	position: absolute;
+	height: 75px;
 }
 
+.schoolLogo
+{
+	height: 50px;
+	margin-bottom: 30px;
+	padding-right: 30px;
+}
+
+.imdLogo
+{
+	padding-left: 30px;
+	margin-bottom: 30px;
+	width: 50px;
+}
+
+#facebookButtons
+{
+	float: left;
+	padding-right: 20px;
+}
+
+.terrAppke
+{
+	/*color: #d34006*/
+	color: #8b0000;
+}
+
+#twitter-widget-0
+{
+	margin-top: 5px;
+}
 /*--------------------------------------------MEDIA QUERIES---------------------------------------------------------------*/
 
 @media only screen and (min-width: 640px)
 {
 
-#dynamic
-{
-	font-size: 40px;
-	max-width: 700px;
+	#dynamic
+	{
+		font-size: 40px;
+		max-width: 700px;
+	}
+
+
+	#content
+	{
+		text-align: left;
+	}
+
+	#content #now
+	{
+		margin-left: 0px;
+		margin-right: 0px;
+	}
+
+	#content #now #now-degrees
+	{
+		margin-left: 30px;
+	}
+
+	#content #txt
+	{
+		/*max-width: 600px;*/
+		max-width: 800px;
+	}
+
+	#userEmail
+	{
+		width: 250px;
+	}
+
 }
 
-#content
+@media only screen and (max-width: 390px)
 {
-	text-align: left;
-}
-
-#content #now
-{
-	margin-left: 0px;
-	margin-right: 0px;
-}
-
-#content #now #now-degrees
-{
-	margin-left: 30px;
-}
-
-#content #txt
-{
-	max-width: 600px;
-}
-
+	#facebookButtons 
+	{
+		float: none;
+		padding-right: 20px;
+		margin-bottom: 10px;
+	}
 }
 
 /*---------------------------CSS-ANIMATIONS--------------------------------------------------------*/
@@ -278,9 +329,9 @@ a:hover
 
 
 .txtGoDown {
-   -webkit-transform: translateY(120px);
-   transform: translateY(120px);
-   ms-transform: translateY(120px);
+   -webkit-transform: translateY(90px);
+   transform: translateY(90px);
+   ms-transform: translateY(90px);
 }
 
 
@@ -348,6 +399,7 @@ a:hover
     transition: background-color 1500ms linear;
 }
 
+
 .animateBackgroundColorChoice8 {
     background-color: #f94f2d;
     -webkit-transition: background-color 1500ms linear;
@@ -355,4 +407,19 @@ a:hover
     -o-transition: background-color 1500ms linear;
     -ms-transition: background-color 1500ms linear;
     transition: background-color 1500ms linear;
+}
+
+
+/*---------------------FONTS-----------------------------------------*/
+
+@font-face {
+	font-family: 'roboto-regular';
+	src: url(../fonts/Roboto-Regular.ttf);
+	src: local('roboto-regular'), url(../fonts/Roboto-Regular.ttf) format('truetype');
+}
+
+@font-face {
+	font-family: 'oxygen-regular';
+	src: url(../fonts/Oxygen-Regular.ttf);
+	src: local('oxygen-regular'), url(../fonts/Oxygen-Regular.ttf) format('truetype');
 }

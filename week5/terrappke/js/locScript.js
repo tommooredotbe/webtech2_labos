@@ -115,48 +115,48 @@ function fillInFields(weatherInfo)
 	//dynamische achtergrondkleur en h1
 	if(today.currentTemp<0)
 	{
-	  $("#dynamic").text("Jammer genoeg nog veel te koud voor terrappkes weer. Stay tuned!");
+	  $("#dynamic").html("Jammer genoeg nog veel te koud voor terr<span class='terrAppke'>App</span>kes weer. Stay tuned!");
 	 // $('body').css('background-color', '#b6d8ec');
 	 $('body').addClass('animateBackgroundColorChoice1');
 	}
 	else if(today.currentTemp>0 && today.currentTemp<=5)
 	{
-	  $("#dynamic").text("Het is berenkoud! Nog even geduld en het is terrappkes weer.");
+	  $("#dynamic").html("Het is berenkoud! Nog even geduld en het is terr<span class='terrAppke'>App</span>kes weer.");
 	  //$('body').css('background-color', '#81bcde');
 	 $('body').addClass('animateBackgroundColorChoice2');
 	}
 	else if(today.currentTemp>5 && today.currentTemp<=10)
 	{
-	  $("#dynamic").text("Op dit moment is het nog te koud voor een terrappke. Hang on!");
+	  $("#dynamic").html("Op dit moment is het nog te koud voor een terr<span class='terrAppke'>App</span>ke. Hang on!");
 	  //$('body').css('background-color', '#81bcde');
 	 $('body').addClass('animateBackgroundColorChoice3');
 	}
 	else if(today.currentTemp>10 && today.currentTemp<=15)
 	{
-	  $("#dynamic").text("Nog een paar graden meer en het is terrappkes tijd!");
+	  $("#dynamic").html("Nog een paar graden meer en het is terr<span class='terrAppke'>App</span>kes tijd!");
 	 // $('body').css('background-color', '#40d0bd');
 	 $('body').addClass('animateBackgroundColorChoice4');
 	}
 	else if(today.currentTemp>15 && today.currentTemp<=20)
 	{
-	  $("#dynamic").text("Warm genoeg voor een terrappke!");
+	  $("#dynamic").html("Warm genoeg voor een terr<span class='terrAppke'>App</span>ke!");
 	  //$('body').css('background-color','#faaa37');
 	 $('body').addClass('animateBackgroundColorChoice5');
 	}
 	else if(today.currentTemp>20 && today.currentTemp<=25)
 	{
-	  $("#dynamic").text("Warm weer betekent terrappkes tijd!");
+	  $("#dynamic").html("Warm weer betekent terr<span class='terrAppke'>App</span>kes tijd!");
 	 // $('body').css('background-color','#f9832d');
 	 $('body').addClass('animateBackgroundColorChoice6');
 	}
 	else if(today.currentTemp>25 && today.currentTemp<=30)
 	{
-	  $("#dynamic").text("Het is nu super goed weer. Klaar voor een terrappke!");
+	  $("#dynamic").html("Het is nu super goed weer. Klaar voor een terr<span class='terrAppke'>App</span>ke!");
 	 //$('body').css('background-color', '#f9672d');
 	 $('body').addClass('animateBackgroundColorChoice7');
 	}
 	else if(today.currentTemp>30){
-	  $("#dynamic").text("Het is geweldig warm hier. Kom mee een terrappke doen!");
+	  $("#dynamic").html("Het is geweldig warm hier. Kom mee een terr<span class='terrAppke'>App</span>ke doen!");
 	  //$('body').css('background-color', '#f94f2d');
 	 $('body').addClass('animateBackgroundColorChoice8');
 	}

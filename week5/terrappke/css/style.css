@@ -64,14 +64,16 @@ body
 
 h1
 {
-	font-size: 40px;
+	font-size: 36px;
 	font-family: 'oxygen-regular', sans-serif;
+
 }
 
 #dynamic
 {
 	font-size: 20px;
 	font-family: 'oxygen-regular', sans-serif;
+	line-height: 45px;
 }
 
 a:link,
@@ -234,7 +236,7 @@ a:hover
 
 	#dynamic
 	{
-		font-size: 40px;
+		font-size: 36px;
 		max-width: 700px;
 	}
 

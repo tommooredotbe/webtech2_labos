@@ -90,7 +90,8 @@ a:hover
 {
 	margin: 0 auto;
 	width: 200px;
-	margin-top: 25px;
+	margin-top: 16px;
+	/*margin-top: 25px;*/
 	font-size: 30px;
 	text-transform: uppercase;
 	position: absolute;
@@ -126,8 +127,8 @@ a:hover
 {
 	transition: -webkit-transform 2s;
 	transition: transform 2s;
-	/*margin-top: 59px;*/
-	margin-top: 10px;
+	/*margin-top: 25px;*/
+	margin-top: 18px;
 }
 
 #content #cMail
@@ -172,11 +173,24 @@ a:hover
 
 .loadingImage
 {
-	width: 35px;
-	margin-top: 10px;
-	/*margin-left: -15px;*/
+	/*width: 35px;
+	margin-top: 10px;*/
+	margin-left: 5px;
+	margin-top: -20px;
 	display: none;
-	/*position: absolute;*/
+	position: absolute;
+}
+
+#facebookActions
+{
+	margin-top: 10px;
+}
+
+.schoolLogo
+{
+	width: 155px;
+	right: 20px;
+	position: absolute;
 }
 
 /*--------------------------------------------MEDIA QUERIES---------------------------------------------------------------*/

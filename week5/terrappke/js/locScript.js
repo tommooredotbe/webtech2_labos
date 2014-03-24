@@ -3,14 +3,11 @@
 var receivedPosition=false;
 
 $(document).ready(function () {
-	var d = new Date();
-	var thirtyMinsAgo = d.getTime() - 3600000; //3600000 milisec = 60 mins
 	
 	if(localStorageAvailable())
 	{
 
 		var information = localStorage.getItem('weatherObj');
-    	var weatherTimestamp = localStorage.getItem("weatherTimestamp");
 
     	if (information === null)
 	    {
@@ -18,6 +15,9 @@ $(document).ready(function () {
 	    }
 	    else
 	    {
+	    	var d = new Date();
+			var thirtyMinsAgo = d.getTime() - 3600000; //3600000 milisec = 60 mins
+			var weatherTimestamp = localStorage.getItem("weatherTimestamp");
 	        // als timestamp in mili groter is dan nu-30mins
 	        if(weatherTimestamp>thirtyMinsAgo)
 	        {

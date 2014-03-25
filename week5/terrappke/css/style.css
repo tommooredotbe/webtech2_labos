@@ -332,9 +332,9 @@ a:hover
 
 
 .txtGoDown {
-   -webkit-transform: translateY(90px);
-   transform: translateY(90px);
-   ms-transform: translateY(90px);
+   -webkit-transform: translateY(100px);
+   transform: translateY(100px);
+   ms-transform: translateY(100px);
 }
 
 

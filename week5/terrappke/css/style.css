@@ -140,7 +140,7 @@ a:hover
 
 #content #cMail
 {
-	margin-top: 30px;
+	margin-top: 10px;
 	margin-bottom: 30px;
 }
 
@@ -230,10 +230,46 @@ a:hover
 {
 	margin-top: 5px;
 }
+
+#readMore
+{
+	text-decoration: underline;
+	overflow: hidden;
+	max-width: 308px;
+}
+
+#readMore:hover
+{
+	cursor: pointer;
+}
+
+#infoContainer
+{
+	overflow: hidden;
+}
+
+#extraInfo
+{
+	/*transition: -webkit-transform 1.6s;*/
+	/*transition: transform 1.6s;*/
+	/*top: -40px;*/
+
+	max-width: 800px;
+	transition: -webkit-transform 1.6s;
+	transition: transform 1.6s;
+	position: absolute;
+}
+
+#callToActions
+{
+	transition: -webkit-transform 1.6s;
+	transition: transform 1.6s;
+}
+
 /*--------------------------------------------MEDIA QUERIES---------------------------------------------------------------*/
 
-@media only screen and (min-width: 640px)
-{
+
+@media only screen and (min-width: 640px){
 
 	#dynamic
 	{
@@ -269,6 +305,8 @@ a:hover
 		width: 250px;
 	}
 
+
+
 }
 
 @media only screen and (max-width: 390px)
@@ -299,14 +337,43 @@ a:hover
 
 }
 
+.animateFadeIn
+{
+ 	-webkit-animation: fadeIn 3s;
+    animation: fadeIn 3s;
+
+}
+
+
+.animateFadeOut
+{
+
+ 	-webkit-animation: fadeOut 1s;
+    animation: fadeOut 1s;
+/*       -webkit-transform: translateY(-50px);
+   transform: translateY(-50px);
+   ms-transform: translateY(-50px);*/
+}
+
+
 @-webkit-keyframes fadeIn {
     from { opacity: 0; }
-      to { opacity: 1; }
+      to { opacity: 1; }   
 }
 
 @keyframes fadeIn {
     from { opacity: 0; }
       to { opacity: 1; }
+}
+
+@-webkit-keyframes fadeOut{
+    from { opacity: 1; }
+      to { opacity: 0; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+      to { opacity: 0; }
 }
 
 /*@-webkit-keyframes flipWeatherDiv
@@ -411,6 +478,31 @@ a:hover
     -ms-transition: background-color 1500ms linear;
     transition: background-color 1500ms linear;
 }
+
+
+.nowSlideDown {
+   -webkit-transform: translateY(100px);
+   transform: translateY(100px);
+   ms-transform: translateY(100px);
+
+	animation-delay:3s;
+	-webkit-animation-delay:3s;
+}
+
+.nowSlideUp {
+   -webkit-transform: translateY(-100px);
+   transform: translateY(-100px);
+   ms-transform: translateY(-100px);
+
+	animation-delay:3s;
+	-webkit-animation-delay:3s;
+}
+
+
+
+
+
+
 
 
 /*---------------------FONTS-----------------------------------------*/

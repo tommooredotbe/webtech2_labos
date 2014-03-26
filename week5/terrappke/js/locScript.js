@@ -76,7 +76,8 @@ $(document).ready(function () {
 			$("#callToActions").removeClass("nowSlideDown");
 			$("#callToActions").addClass("nowSlideUp");
 			$(".nowSlideUp").css('-webkit-transform','translateY(-' + 0 + 'px)');
-
+			$(".nowSlideUp").css('transform','translateY(-' + 0 + 'px)');
+			$(".nowSlideUp").css('ms-transform','translateY(-' + 0 + 'px)');
 			//$("#callToActions").removeClass("nowSlideDown");
 			/*switch(true)
 			{
@@ -90,6 +91,8 @@ $(document).ready(function () {
 			$("#callToActions").removeClass("nowSlideUp");
 			$("#callToActions").addClass("nowSlideDown");
 			$(".nowSlideDown").css('-webkit-transform','translateY(' + extraInfoWidth + 'px)');
+			$(".nowSlideDown").css('transform','translateY(' + extraInfoWidth + 'px)');
+			$(".nowSlideDown").css('ms-transform','translateY(' + extraInfoWidth + 'px)');
 
 		}
 		$("#extraInfo").addClass(addedClass);

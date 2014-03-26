@@ -1,0 +1,25 @@
+extends layout
+
+block content
+  //h1= title
+  //p Welcome to #{title}
+  #content
+    #leftSide
+        //p.questionStyle
+        //    |Vraag1
+
+       // p.questionStyle
+       //     |Vraag2
+
+       // p.questionStyle
+       //     |Vraag3
+    #rightSide
+        p.questionHeader
+            |ASK A QUESTION
+        ul#form
+            li: input#nameField(type="text", placeholder="your name")
+            li: textarea(name='questionField', id='questionField', placeholder="your question" )
+            li: p.errorMessage 
+            li: input#submitQuestion(type="submit", value="Speak up")
+
+    

@@ -35,7 +35,70 @@ $(document).ready(function () {
 		requestCurrentPosition();  
 	}
 
-    
+	var insertedText = "Deze webapplicatie is gemaakt door live weerdata op te vragen bij een globaal weerstation.";
+	insertedText += " We visualiseren deze data door webanimaties en gieten deze in een mooi jasje.";
+	insertedText += " In IMD leer je alle soorten webapplicaties te maken volgens de nieuwste trends.";
+	insertedText += " Het is aan jou om hier creatief mee om te springen, zowel met design als development, ";
+	insertedText += "en misschien wordt jij de nieuwe Zuckerberg. Denk je dat je de moed in je hebt?";
+	insertedText +=" Schrijf je dan zeker in voor een terrappke en maak kennis met onze opleiding.";
+	
+	$("#readMore").on('click',function(){
+		//var infoTXT = "";
+		if($("#extraInfo").hasClass("animateFadeIn"))
+		{
+			infoTXT = " ";
+			var deletedClass = "animateFadeIn";
+			var addedClass = "animateFadeOut";
+			// hier een timeout, want anders verdwijnt de text,
+			// vooraleer de animatie eindigt
+			setTimeout(function(){
+			$("#extraInfo").html(infoTXT);
+			},1000);
+		}
+		else
+		{
+			
+			infoTXT = insertedText;
+
+			var  addedClass = "animateFadeIn";
+			var deletedClass = "animateFadeOut";
+			$("#extraInfo").html(infoTXT);
+			
+		}
+		//$("#extraInfo").toggleClass('animateFadeIn');
+		var extraInfoWidth = $("#extraInfo").height();
+		//$("#callToActions").css('-webkit-transform','translateY(' + windowWidth + 'px)');
+
+		
+		//$("#callToActions").toggleClass("nowSlideDown");
+		if($("#callToActions").hasClass("nowSlideDown"))
+		{
+			$("#callToActions").removeClass("nowSlideDown");
+			$("#callToActions").addClass("nowSlideUp");
+			$(".nowSlideUp").css('-webkit-transform','translateY(-' + 0 + 'px)');
+
+			//$("#callToActions").removeClass("nowSlideDown");
+			/*switch(true)
+			{
+				case windowWidth <= 363 : 
+					$("#callToActions").toggleClass("nowSlideDownMIN363px");
+					break;
+			}*/
+		}
+		else
+		{
+			$("#callToActions").removeClass("nowSlideUp");
+			$("#callToActions").addClass("nowSlideDown");
+			$(".nowSlideDown").css('-webkit-transform','translateY(' + extraInfoWidth + 'px)');
+
+		}
+		$("#extraInfo").addClass(addedClass);
+		$("#extraInfo").removeClass(deletedClass);
+
+
+	});
+
+
     
 });
 

@@ -2,92 +2,180 @@
 // * css animation op de messages
 // * voting systeem
 // * bij meermaals klikken = voten, moet de vraag groter worden
+// DAT IS DAN OPNIEUW SUBSCRIBER EN PUBLISHEN NAAR EEN ANDER PATH
+// DAN WORDT ER BIJ DE PUBLISH MEEGEGEVEN WELK ELEMENT GROTER MOET WORDEN
 //
 
+var previousChatTime = new Date();
+var messageId = 0;
+var messagesIds = [];
 
 $(document).ready(function(){
 
 /*	var client = new Faye.Client('http://localhost:3000/faye',{
 				timeout: 20
 	});*/
+    
+    
+    var text_max = 100;
+    $('.charactersLeft').html(text_max + ' characters remaining');
+
+    $('#questionField').keyup(function() {
+        var text_length = $('#questionField').val().length;
+        var text_remaining = text_max - text_length;
+
+        $('.charactersLeft').html(text_remaining + ' characters remaining');
+    });
+
+
+   
 	var client = new Faye.Client('http://localhost:3000/faye/',{
 				timeout: 20
 	});
 
 //	Clients should subscribe to channels using the #subscribe() method:		
-	var subscription = client.subscribe('/ask', function(message) {
+	var subscriptionAsk = client.subscribe('/ask', function(message) {
 	   //alert('Got a message: ' + message.text);
-	   $("#leftSide").append("<p class='questionStyle'><span class='userClass'>" + message.user + ":</span></br>" + message.chat + "</p>")
-	});
-//	The Subscription object is a promise that is fulfilled when the subscription has been acknowledged by the server
-	/*subscription.then(function() {
-	  alert('Subscription is now active!');
-	});*/
+        var currentDateTime = new Date();
+        var currentdate = createDateStringOnlyTime(currentDateTime);
+
+        
+    var appendToLeftSide = "<div id='message" + messageId 
+                         + "' class='questionStyle animateQuestion'><div class='userClass'><h1>"
+                         + capitaliseFirstLetter(message.user) + " asks: </h1><p class='voteUp'>Vote up</p><p class='chatMessage'>"
+                         + message.chat  + "</p></div><div class='chatTime'><p>" 
+                         + currentdate + "</p></div></div>"
+
+
+        messagesIds.push("message"+messageId);
+        messageId++;
+        previousChatTime = currentDateTime;
+        console.log(messagesIds);
+        
+       console.log(currentDateTime);
+        $("#leftSide").append(appendToLeftSide);
+	
+    }); // END VAN SUBSCRIBE ASK
+
 	
     $('#submitQuestion').on('click',null, function() {
     	var chatMessage = $('#questionField').val();
     	var chatUser = $('#nameField').val();
-    		/*var url = 'http://localhost:3000/message';
-				
-    		var message = {message: 'Client 1: ' + chat.val()};
-    		var dataType = 'json';
-    		$.ajax({
-    		        type: 'POST',
-    		        url: url,
-    		        data: message,
-    		        dataType: dataType,
-    		    });
-    		  chat.val('');*/
+        var messageIllegalCharsFound = illegalCharsFound(chatMessage);
+        var userIllegalCharsFound = illegalCharsFound(chatUser);
 
-    	//client.publish("/message", chat);
-//	You can send a message using the #publish() method, passing in the channel name and a message object.
-    	//var publication = client.publish('/ask', {text: chat});
-    	if(chatMessage != "" && chatUser != "" )
+    	if(chatMessage != "" && chatUser != ""  && (messageIllegalCharsFound == false && userIllegalCharsFound == false) )
     	{
     		$(".errorMessage").text("") ;
     		$(".errorMessage").css('display','none');
-			var publication = client.publish('/ask', {chat : chatMessage, user : chatUser});
+			var publicationAsk = client.publish('/ask', {chat : chatMessage, user : chatUser});
+            $('#questionField').val("");
+            $('#nameField').val("");
+            $('.charactersLeft').html('100 characters remaining');
     	}
     	else
     	{
     		$(".errorMessage").text("You must fill in both your name and a question!") ;
     		$(".errorMessage").css('display','block');
     	}
-    	
-// ust like subscribe(), the publish() method returns a promise that is fulfilled when the server
-// acknowledges the message. This just means the server received and routed the message successfully, 
-// not that it has been received by all other clients. The promise is rejected if the server explcitly 
-// returns an error saying it could not publish the message to other clients; network errors are therefore 
-// not covered by this API.
- /*   	publication.then(function() {
-			  alert('Message received by server!');
-			}, function(error) {
-			  alert('There was a problem: ' + error.message);
-		});
-*/
 
     	
-	});
+	}); // END VAN ONCLICK SUBMITQUESTION
 
-/*	$("#submitQuestion").on('click',function(){
 
-	});*/
+    $( "#leftSide" ).on( "mouseenter", "div", function( event ) {
+     //  $(".voteUp").css('display','block');
+       event.preventDefault();
+       $(this).find(".voteUp").css('display','block');
+    });
 
-	/*var nameField = $("#nameField");
+    $( "#leftSide" ).on( "mouseleave", "div", function( event ) {
+       $(this).find(".voteUp").css('display','none');
+       event.preventDefault();
+    });
 
-    		    $('#submitQuestion').on('click',null, function() {
-    		        var url = 'http://localhost:3000/';
-				
-    		        var message = {message: 'Client 1: ' + nameField.val()};
-    		        var dataType = 'json';
-    		        $.ajax({
-    		            type: 'POST',
-    		            url: url,
-    		            data: message,
-    		            dataType: dataType,
-    		        });
-    		        nameField.val('');
-    		    });*/
+    var subscriptionAllquestion = client.subscribe('/allquestions', function(message) {
+        var currentElement = $("#" + message.chosenQuestion);
+        currentElement.animate({height: currentElement.height() * 1.2}, 1000 );
+        var fontSize = currentElement.find(".chatMessage").css('fontSize');    
+        if(fontSize != undefined)
+        {
+            //alert(fontSize);
+            var numberFontSize = fontSize.substr(0,fontSize.length - 2);
+           // alert(numberFontSize);
+           currentElement.find(".chatMessage").css('fontSize', (numberFontSize * 1.2) + "px");
+        }
+    });
 
-});
+    $( "#leftSide" ).on( "click", "div", function( event ) {
+      var chosenQuestion = $(this)[0].id;
+       event.preventDefault();
+    var publicationAllQuestions = client.publish('/allquestions', {chosenQuestion : chosenQuestion});
+    
+    });
+
+
+      
+
+
+});// END VAN DOCUMENT READY
+
+function createDateString(currentdate)
+{
+    var currentDay = checkDate(currentdate.getDate());
+    var currentMonth = checkDate(currentdate.getMonth()+1);
+    var currentYear = checkDate(currentdate.getFullYear());
+    var currentHour = checkDate(currentdate.getHours());
+    var currentMinutes = checkDate(currentdate.getMinutes());    
+    var currentSecond = checkDate(currentdate.getSeconds());  
+
+    var currentDateTime = currentDay + "/"
+                    + currentMonth + "/" 
+                    + currentYear + " ( "  
+                    + currentHour + ":"  
+                    + currentMinutes + ":" 
+                    + currentSecond + " ) " ;
+    return currentDateTime;
+}
+
+function createDateStringOnlyTime(currentdate)
+{
+   
+    var currentHour = checkDate(currentdate.getHours());
+    var currentMinutes = checkDate(currentdate.getMinutes());    
+    var currentSecond = checkDate(currentdate.getSeconds());  
+
+    var currentDateTime = currentHour + ":"  
+                    + currentMinutes + ":" 
+                    + currentSecond;
+    return currentDateTime;
+}
+
+
+function checkDate(p_dateElement)
+{
+    if(p_dateElement < 10)
+        p_dateElement = "0" + p_dateElement;
+    return p_dateElement;
+}
+
+function capitaliseFirstLetter(string)
+{
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+
+// CHECKEN OF DAT ER GEEN HTML TAGS GEBRUIKT WORDEN
+function illegalCharsFound(checkString)
+{
+    //var specialCharacters = "<>@!#$%^&*()_+[]{}?:;|'\"\\,./~`-=";
+    var specialCharacters = "<>~`";
+    var result = false;
+    if (checkString.indexOf('>')!=-1 || checkString.indexOf('<')!=-1 ) // dan is het gevonden
+    {
+       result = true;  
+    }
+
+    return result;
+}
 

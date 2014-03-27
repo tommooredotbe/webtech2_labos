@@ -62,67 +62,47 @@ body
 
 .questionStyle
 {
-	width: 90%;
-	border-radius: 5px;
+	/*padding: 10px;*/
+	padding: 25px;
 	border: 1px solid #cccccc;
-	padding:10px;
-	overflow: hidden;
-	margin-bottom:10px;
+	border-radius: 5px;
+	/*margin: 15px;*/
+	margin: 15px 45px;
+	/*width: 80%;*/
 }
-.chatMessage, .chatTime
-{float: left;}
-
-
-.chatTime
-{
- 	font-size: 0.97em;
-	float: right;
-	color: #949494;
-	position: absolute;
-	bottom: 2px;
-	right: 5px;
-}
-
-.chatMessage 
-{
-	font-size: 1.15em;
-	margin-bottom: 5px;
-	color: #003467;
-	width: 84%;
-}
-
-.chatTime p
-{
-	text-align: right;
-}
-
 
 .questionStyle:hover
 {
 	cursor: pointer;
-	/*border: 1px solid red;*/
-	background-color: #f9f9f9;
+	font-weight: bold;
 }
+
+/*.userClass,*/ .chatTime
+{
+	color: #949494;
+}
+
 
 .userClass
 {
-	margin-top: -5px;
-	
-}
-.userClass h1
-{
+	top: 20px;
+	position: absolute;
 	color: #808080;
-	font-size: 0.95em;
 }
 
-.voteUp
+.chatMessage
+{
+	color: #003467;
+	position: absolute;
+	bottom: -18px;
+}
+
+
+.chatTime
 {
 	position: absolute;
-	top: 2px;
+	bottom: 2px;
 	right: 5px;
-	color: red;
-	font-size: 0.95em;
-	display: none;
 }
 
 .errorMessage
@@ -131,7 +111,7 @@ body
 	display: none;
 }
 
-#leftSide:first-child
+#leftSide div:first-child
 {
 	margin-top: -20px;
 	/*color: red;*/
@@ -146,6 +126,42 @@ body
 
 
 
+.messageSec
+			{
+				background-color: blue;
+				width: 600px;
+				border-radius: 5px;
+				padding: 7.5px;
+				overflow: hidden;
+				margin-bottom:10px;
+			}
+			.messageText, .messageTime
+			{float: left;}
+			
+			.messageText
+			{
+				background-color: red; 
+				width: 525px;
+			}
+
+			.messageTime
+			{
+				background-color: yellow; 
+				width: 65px;
+				margin-left: 10px;
+			}
+
+			.messageText h1
+			{
+				font-size: 1.15em;
+				font-weight: bold;
+				margin-bottom: 5px;
+			}
+
+			.messageTime p
+			{
+				text-align: right;
+			}
 
 
 
@@ -164,19 +180,6 @@ body
  ms-transform-origin: left bottom;
  ms-animation: animateQuestion 1s;
  ms-animation-fill-mode: forwards;
-
--webkit-transition: -webkit-transform 1s ease-in;
--moz-transition: -moz-transform 1s ease-in;
--ms-transition: -ms-transform 1s ease-in;
- transition: transform 1s ease-in;
-}
-
-.upVoteQuestion
-{
--webkit-transform: scale(2, 2);
-   -moz-transform: scale(2, 2);
-    -ms-transform: scale(2, 2);
-        transform: scale(2, 2);
 }
 
 
@@ -235,19 +238,12 @@ body
 		overflow: scroll;
 		/*height: 65%;*/
 		height: 45%;
-		/*padding-bottom: 37px;*/
-		padding-bottom: 26px;
-		margin: 0 1%;
+		padding-bottom: 37px;
 	}
 
 	body 
 	{
 	  	padding: 10px;
-	}
-
-
-	.chatMessage {
-		width: 82%;
 	}
 }
 
